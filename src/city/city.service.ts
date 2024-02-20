@@ -4,11 +4,12 @@ import { City } from './entities/city.entity';
 import { Repository } from 'typeorm';
 import { CacheService } from '../cache/cache.service';
 
+export type CityRepository = Repository<City>;
 @Injectable()
 export class CityService {
   constructor(
     @InjectRepository(City)
-    private readonly cityRepository: Repository<City>,
+    private readonly cityRepository: CityRepository,
 
     private readonly cacheService: CacheService,
   ) {}

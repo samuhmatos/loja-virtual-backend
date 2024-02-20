@@ -6,11 +6,13 @@ import { CreateAddressDto } from './dtos/createAddress.dto';
 import { UserService } from '../user/user.service';
 import { CityService } from '../city/city.service';
 
+export type AddressRepository = Repository<Address>;
+
 @Injectable()
 export class AddressService {
   constructor(
     @InjectRepository(Address)
-    private readonly addressRepository: Repository<Address>,
+    private readonly addressRepository: AddressRepository,
 
     private readonly userService: UserService,
     private readonly cityService: CityService,
