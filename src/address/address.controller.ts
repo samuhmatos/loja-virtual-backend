@@ -8,9 +8,9 @@ import {
 import { CreateAddressDto } from './dtos/createAddress.dto';
 import { AddressService } from './address.service';
 import { Address } from './entities/address.entity';
-import { Roles } from 'src/decorators/roles.decorator';
-import { UserType } from 'src/user/enum/user-type.enum';
-import { UserId } from 'src/decorators/user-id.decorator';
+import { Roles } from '../decorators/roles.decorator';
+import { UserType } from '../user/enum/user-type.enum';
+import { UserId } from '../decorators/user-id.decorator';
 
 @Controller('address')
 @Roles(UserType.User)
