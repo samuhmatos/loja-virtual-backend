@@ -24,6 +24,12 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guards';
 import { JwtModule } from '@nestjs/jwt';
 import { AlterTableUser1708365834851 } from './database/migrations/1708365834851-alter-table-user';
+import { CreateCategoryTable1708523040904 } from './database/migrations/1708523040904-create-category-table';
+import { CreateProductTable1708523053502 } from './database/migrations/1708523053502-create-product-table';
+import { CategoryModule } from './category/category.module';
+import { ProductModule } from './product/product.module';
+import { Category } from './category/entities/category.entity';
+import { Product } from './product/entities/product.entity';
 
 @Module({
   imports: [
@@ -36,7 +42,7 @@ import { AlterTableUser1708365834851 } from './database/migrations/1708365834851
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, City, State, Address],
+      entities: [User, City, State, Address, Category, Product],
       migrations: [
         CreateTableUser1708097611609,
         CreateTableState1708103629835,
@@ -46,6 +52,8 @@ import { AlterTableUser1708365834851 } from './database/migrations/1708365834851
         InsertInState1708104752955,
         InsertInCity1708104765469,
         AlterTableUser1708365834851,
+        CreateCategoryTable1708523040904,
+        CreateProductTable1708523053502,
       ],
       migrationsRun: true,
     }),
@@ -55,6 +63,8 @@ import { AlterTableUser1708365834851 } from './database/migrations/1708365834851
     CacheModule,
     AuthModule,
     JwtModule,
+    CategoryModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],
