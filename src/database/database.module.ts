@@ -18,6 +18,7 @@ import { InsertInCity1708104765469 } from './migrations/1708104765469-insert-in-
 import { AlterTableUser1708365834851 } from './migrations/1708365834851-alter-table-user';
 import { CreateCategoryTable1708523040904 } from './migrations/1708523040904-create-category-table';
 import { CreateProductTable1708523053502 } from './migrations/1708523053502-create-product-table';
+import { InsertRootInUser1708538550074 } from './migrations/1708538550074-insert-root-in-user';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CreateProductTable1708523053502 } from './migrations/1708523053502-crea
             AlterTableUser1708365834851,
             CreateCategoryTable1708523040904,
             CreateProductTable1708523053502,
+            InsertRootInUser1708538550074,
           ],
           migrationsRun: true,
         };
