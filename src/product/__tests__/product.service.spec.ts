@@ -7,6 +7,7 @@ import { createProductMock } from '../__mocks__/createProduct.mock';
 import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { ReturnDeleteMock } from '../../__mocks___/returnDelete.mock';
+import { updateProductMock } from '../__mocks__/updateProduct.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -85,7 +86,7 @@ describe('ProductService', () => {
   });
 
   it('should return error if product not exist on findById', async () => {
-    jest.spyOn(productRepository, 'findOne').mockRejectedValue(undefined);
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
 
     expect(service.findById(productMock.id)).rejects.toThrowError();
   });
@@ -94,5 +95,19 @@ describe('ProductService', () => {
     const deleted = await service.remove(productMock.id);
 
     expect(deleted).toEqual(ReturnDeleteMock);
+  });
+
+  it('should return product on update', async () => {
+    const product = await service.update(updateProductMock, productMock.id);
+
+    expect(product).toEqual(productMock);
+  });
+
+  it('should return error on update', async () => {
+    jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
+
+    expect(
+      service.update(updateProductMock, productMock.id),
+    ).rejects.toThrowError();
   });
 });
