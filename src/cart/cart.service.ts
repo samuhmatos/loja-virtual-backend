@@ -5,6 +5,7 @@ import { DeleteResult, Repository } from 'typeorm';
 import { Cart } from './entities/cart.entity';
 import { CreateCartDto } from './dtos/createCart.dto';
 import { CartProductService } from '../cart-product/cart-product.service';
+import { UpdateCartDto } from './dtos/update-cart.dto';
 
 export type CartRepository = Repository<Cart>;
 
@@ -43,6 +44,20 @@ export class CartService {
     return this.cartRepository.save({ active: true, userId });
   }
 
+  async clear(userId: number): Promise<DeleteResult> {
+    const cart = await this.findByUserId(userId);
+
+    await this.cartRepository.save({
+      ...cart,
+      active: false,
+    });
+
+    return {
+      affected: AFFECTED_LINE,
+      raw: [],
+    };
+  }
+
   async insertProductInCart(
     createCart: CreateCartDto,
     userId: number,
@@ -56,17 +71,23 @@ export class CartService {
     return cart;
   }
 
-  async clear(userId: number): Promise<DeleteResult> {
+  async removeProduct(
+    productId: number,
+    userId: number,
+  ): Promise<DeleteResult> {
     const cart = await this.findByUserId(userId);
 
-    await this.cartRepository.save({
-      ...cart,
-      active: false,
-    });
+    return this.cartProductService.remove(productId, cart.id);
+  }
 
-    return {
-      affected: AFFECTED_LINE,
-      raw: [],
-    };
+  async updateProduct(
+    updateCartDto: UpdateCartDto,
+    userId: number,
+  ): Promise<Cart> {
+    const cart = await this.findByUserId(userId);
+
+    await this.cartProductService.update(updateCartDto, cart);
+
+    return cart;
   }
 }

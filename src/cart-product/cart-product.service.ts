@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CartProduct } from './entities/cart-product.entity';
 import { CreateCartDto } from 'src/cart/dtos/createCart.dto';
 import { Cart } from 'src/cart/entities/cart.entity';
 import { ProductService } from '../product/product.service';
+import { UpdateCartDto } from 'src/cart/dtos/update-cart.dto';
 
 export type CartProductRepository = Repository<CartProduct>;
 
@@ -55,9 +56,32 @@ export class CartProductService {
       return this.create(createCart, cart.id);
     }
 
+    return this.updateAmount(
+      cartProduct,
+      cartProduct.amount + createCart.amount,
+    );
+  }
+
+  async remove(productId: number, cartId: number): Promise<DeleteResult> {
+    return this.cartProductRepository.delete({ productId, cartId });
+  }
+
+  private async updateAmount(
+    cartProduct: CartProduct,
+    amount: number,
+  ): Promise<CartProduct> {
     return this.cartProductRepository.save({
       ...cartProduct,
-      amount: cartProduct.amount + createCart.amount,
+      amount: amount,
     });
+  }
+
+  async update(updateCartDto: UpdateCartDto, cart: Cart): Promise<CartProduct> {
+    const cartProduct = await this.verifyInCart(
+      updateCartDto.productId,
+      cart.id,
+    );
+
+    return this.updateAmount(cartProduct, updateCartDto.amount);
   }
 }
