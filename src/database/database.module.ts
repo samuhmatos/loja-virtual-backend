@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Address } from 'src/address/entities/address.entity';
-import { Category } from 'src/category/entities/category.entity';
-import { City } from 'src/city/entities/city.entity';
-import { Product } from 'src/product/entities/product.entity';
-import { State } from 'src/state/entities/state.entity';
-import { User } from 'src/user/entities/user.entity';
-import { Cart } from 'src/cart/entities/cart.entity';
+import { Address } from '../address/entities/address.entity';
+import { Category } from '../category/entities/category.entity';
+import { City } from '../city/entities/city.entity';
+import { Product } from '../product/entities/product.entity';
+import { State } from '../state/entities/state.entity';
+import { User } from '../user/entities/user.entity';
+import { Cart } from '../cart/entities/cart.entity';
+import { CartProduct } from '../cart-product/entities/cart-product.entity';
 
 import { CreateTableUser1708097611609 } from './migrations/1708097611609-create_table_user';
 import { CreateTableState1708103629835 } from './migrations/1708103629835-create_table_state';
@@ -23,7 +24,6 @@ import { InsertRootInUser1708538550074 } from './migrations/1708538550074-insert
 import { CreateTableCart1709039097609 } from './migrations/1709039097609-create-table-cart';
 import { CreateTableCartProduct1709040218909 } from './migrations/1709040218909-create-table-cart-product';
 import { AlterTableCart1709041408454 } from './migrations/1709041408454-alter-table-cart';
-import { CartProduct } from 'src/cart-product/entities/cart-product.entity';
 
 @Module({
   imports: [
