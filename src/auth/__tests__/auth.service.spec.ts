@@ -5,7 +5,6 @@ import { userMock } from '../../user/__mocks__/user.mock';
 import { JwtService } from '@nestjs/jwt';
 import { JwtMock } from '../__mocks__/jwt.mock';
 import { loginMock } from '../__mocks__/login.mock';
-import { hash } from 'bcrypt';
 import { ReturnUserDto } from '../../user/dtos/returnUser.dto';
 
 describe('AuthService', () => {
@@ -13,17 +12,13 @@ describe('AuthService', () => {
   let userService: UserService;
 
   beforeEach(async () => {
-    const hashedUserPassword = await hash(userMock.password, 10);
-
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         {
           provide: UserService,
           useValue: {
-            findByEmail: jest
-              .fn()
-              .mockResolvedValue({ ...userMock, password: hashedUserPassword }),
+            findByEmail: jest.fn().mockResolvedValue(userMock),
           },
         },
         {

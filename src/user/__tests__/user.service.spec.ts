@@ -4,6 +4,10 @@ import { User } from '../entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { userMock } from '../__mocks__/user.mock';
 import { createUserMock } from '../__mocks__/createUser.mock';
+import {
+  updateInvalidPasswordMock,
+  updatePasswordMock,
+} from '../__mocks__/updateUser.mock';
 
 describe('UserService', () => {
   let service: UserService;
@@ -84,5 +88,25 @@ describe('UserService', () => {
     const user = await service.create(createUserMock);
 
     expect(user).toEqual(userMock);
+  });
+
+  it('should return user on update password', async () => {
+    const user = await service.updatePassword(updatePasswordMock, userMock.id);
+
+    expect(user).toEqual(userMock);
+  });
+
+  it('should return invalid password on update password', async () => {
+    expect(
+      service.updatePassword(updateInvalidPasswordMock, userMock.id),
+    ).rejects.toThrowError();
+  });
+
+  it('should return error if user not exist on update password', async () => {
+    jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
+
+    expect(
+      service.updatePassword(updateInvalidPasswordMock, userMock.id),
+    ).rejects.toThrowError();
   });
 });

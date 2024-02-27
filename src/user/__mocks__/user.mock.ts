@@ -7,7 +7,7 @@ export const userMock: User = {
   updatedAt: new Date(),
   email: 'jao@gmail.com',
   name: 'joao',
-  password: 'password',
+  password: '$2b$10$CuiH9VfZK10oYGs71hHOse0iUScagvVHV5Yp6O/Ldz3Q1vanOqAYK', // password
   phone: '43534656',
   typeUser: UserType.User,
   id: 123123,
