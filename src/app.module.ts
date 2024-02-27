@@ -17,6 +17,8 @@ import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { DatabaseModule } from './database/database.module';
+import { CartModule } from './cart/cart.module';
+import { CartProductModule } from './cart-product/cart-product.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { DatabaseModule } from './database/database.module';
     JwtModule,
     CategoryModule,
     ProductModule,
+    CartModule,
+    CartProductModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],
