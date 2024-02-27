@@ -22,6 +22,8 @@ import { CreateProductTable1708523053502 } from './migrations/1708523053502-crea
 import { InsertRootInUser1708538550074 } from './migrations/1708538550074-insert-root-in-user';
 import { CreateTableCart1709039097609 } from './migrations/1709039097609-create-table-cart';
 import { CreateTableCartProduct1709040218909 } from './migrations/1709040218909-create-table-cart-product';
+import { AlterTableCart1709041408454 } from './migrations/1709041408454-alter-table-cart';
+import { CartProduct } from 'src/cart-product/entities/cart-product.entity';
 
 @Module({
   imports: [
@@ -34,7 +36,16 @@ import { CreateTableCartProduct1709040218909 } from './migrations/1709040218909-
           username: process.env.DB_USER,
           password: process.env.DB_PASSWORD,
           database: process.env.DB_DATABASE,
-          entities: [User, City, State, Address, Category, Product, Cart],
+          entities: [
+            User,
+            City,
+            State,
+            Address,
+            Category,
+            Product,
+            Cart,
+            CartProduct,
+          ],
           migrations: [
             CreateTableUser1708097611609,
             CreateTableState1708103629835,
@@ -49,6 +60,7 @@ import { CreateTableCartProduct1709040218909 } from './migrations/1709040218909-
             InsertRootInUser1708538550074,
             CreateTableCart1709039097609,
             CreateTableCartProduct1709040218909,
+            AlterTableCart1709041408454,
           ],
           migrationsRun: true,
         };
