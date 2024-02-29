@@ -3,9 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { RolesGuard } from './guards/roles.guards';
 
 import { UserModule } from './user/user.module';
@@ -36,7 +33,6 @@ import { CartProductModule } from './cart-product/cart-product.module';
     CartModule,
     CartProductModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],
+  providers: [{ provide: APP_GUARD, useClass: RolesGuard }],
 })
 export class AppModule {}

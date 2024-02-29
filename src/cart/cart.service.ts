@@ -84,7 +84,9 @@ export class CartService {
     updateCartDto: UpdateCartDto,
     userId: number,
   ): Promise<Cart> {
-    const cart = await this.findByUserId(userId);
+    const cart = await this.findByUserId(userId).catch(async () => {
+      return this.create(userId);
+    });
 
     await this.cartProductService.update(updateCartDto, cart);
 
