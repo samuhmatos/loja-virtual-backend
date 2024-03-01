@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dtos/create-order.dto';
+import { UserId } from 'src/decorators/user-id.decorator';
 
 @Controller('order')
 export class OrderController {
@@ -18,7 +19,8 @@ export class OrderController {
   async create(
     @Body() createOrderDto: CreateOrderDto,
     @Param() cartId: number,
+    @UserId() userId: number,
   ) {
-    return this.orderService.create(createOrderDto, cartId);
+    return this.orderService.create(createOrderDto, cartId, userId);
   }
 }

@@ -12,4 +12,7 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   datePayment?: string;
+
+  @IsNumber()
+  addressId: number;
 }
