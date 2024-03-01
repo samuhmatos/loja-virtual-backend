@@ -6,6 +6,8 @@ import { CreateOrderDto } from '../order/dtos/create-order.dto';
 import { PaymentCreditCard } from './entities/payment-credit-cart.entity';
 import { PaymentType } from './enums/payment-type.enum';
 import { PaymentPix } from './entities/payment-pix.entity';
+import { Product } from '../product/entities/product.entity';
+import { Cart } from '../cart/entities/cart.entity';
 
 export type PaymentRepository = Repository<Payment>;
 @Injectable()
@@ -15,13 +17,33 @@ export class PaymentService {
     private readonly paymentRepository: PaymentRepository,
   ) {}
 
-  create(createOrderDto: CreateOrderDto): Promise<Payment> {
+  private getFinalPrice(products: Product[], cart: Cart): number {
+    return cart.cartProducts?.reduce((accumulator, cartProduct) => {
+      const product = products.find(
+        (product) => product.id === cartProduct.productId,
+      );
+
+      if (product) {
+        return cartProduct.amount * product.price + accumulator;
+      }
+
+      return 0;
+    }, 0);
+  }
+
+  create(
+    createOrderDto: CreateOrderDto,
+    products: Product[],
+    cart: Cart,
+  ): Promise<Payment> {
+    const finalPrice = this.getFinalPrice(products, cart);
+
     if (createOrderDto.amountPayments) {
       const paymentCreditCard = new PaymentCreditCard(
         PaymentType.Done,
+        finalPrice,
         0,
-        0,
-        0,
+        finalPrice,
         createOrderDto,
       );
 
@@ -29,9 +51,9 @@ export class PaymentService {
     } else if (createOrderDto.codePix && createOrderDto.datePayment) {
       const paymentPix = new PaymentPix(
         PaymentType.Done,
+        finalPrice,
         0,
-        0,
-        0,
+        finalPrice,
         createOrderDto,
       );
 

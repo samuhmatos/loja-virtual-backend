@@ -9,6 +9,7 @@ import { CityModule } from '../city/city.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Address]), UserModule, CityModule],
   providers: [AddressService],
+  exports: [AddressService],
   controllers: [AddressController],
 })
 export class AddressModule {}

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -14,13 +13,12 @@ import { UserId } from 'src/decorators/user-id.decorator';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post('/cart/:cartId')
+  @Post()
   @UsePipes(ValidationPipe)
   async create(
     @Body() createOrderDto: CreateOrderDto,
-    @Param() cartId: number,
     @UserId() userId: number,
   ) {
-    return this.orderService.create(createOrderDto, cartId, userId);
+    return this.orderService.create(createOrderDto, userId);
   }
 }

@@ -46,4 +46,26 @@ export class AddressService {
 
     return addresses;
   }
+
+  async findByIdAndUserId(addressId: number, userId: number): Promise<Address> {
+    const address = await this.addressRepository.findOne({
+      where: {
+        id: addressId,
+        userId,
+      },
+      relations: {
+        city: {
+          state: true,
+        },
+      },
+    });
+
+    if (!address) {
+      throw new NotFoundException(
+        `address id: ${addressId} not found for userId ${userId}`,
+      );
+    }
+
+    return address;
+  }
 }
