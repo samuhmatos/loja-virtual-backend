@@ -11,7 +11,7 @@ import {
 
 import { CartProduct } from '../../cart-product/entities/cart-product.entity';
 import { Category } from '../../category/entities/category.entity';
-import { OrderProduct } from 'src/order-product/entities/order-product.entity';
+import { OrderProduct } from '../../order-product/entities/order-product.entity';
 
 @Entity({ name: 'product' })
 export class Product {

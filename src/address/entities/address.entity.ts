@@ -1,4 +1,4 @@
-import { Order } from 'src/order/entities/order.entity';
+import { Order } from '../../order/entities/order.entity';
 import { City } from '../../city/entities/city.entity';
 import { User } from '../../user/entities/user.entity';
 import {

@@ -34,6 +34,8 @@ import { CreateTableStatus1709296000518 } from './migrations/1709295933446-creat
 import { CreateTablePayment1709295933447 } from './migrations/1709295933447-create-table-payment';
 import { CreateTableOrder1709297504100 } from './migrations/1709297504100-create-table-order';
 import { CreateTableOrderProduct1709297516451 } from './migrations/1709297516451-create-table-order-product';
+import { InsertTableStatus1709300616277 } from './migrations/1709300616277-insert-table-status';
+import { AlterTablePayment1709300644327 } from './migrations/1709300644327-alter-table-payment';
 
 @Module({
   imports: [
@@ -81,6 +83,8 @@ import { CreateTableOrderProduct1709297516451 } from './migrations/1709297516451
             CreateTablePayment1709295933447,
             CreateTableOrder1709297504100,
             CreateTableOrderProduct1709297516451,
+            InsertTableStatus1709300616277,
+            AlterTablePayment1709300644327,
           ],
           migrationsRun: true,
         };
