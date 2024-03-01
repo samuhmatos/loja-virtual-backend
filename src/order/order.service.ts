@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -54,6 +54,23 @@ export class OrderService {
     await this.cartService.clear(userId);
 
     return order;
+  }
+
+  async findAllByUSerId(userId: number): Promise<Order[]> {
+    const orders = await this.orderRepository.find({
+      where: { userId },
+      relations: {
+        address: true,
+        ordersProduct: { product: true },
+        payment: { paymentStatus: true },
+      },
+    });
+
+    if (!orders || orders.length === 0) {
+      throw new NotFoundException(`Orders not found`);
+    }
+
+    return orders;
   }
 
   private async createOrderProductUsingCart(

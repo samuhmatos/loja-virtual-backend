@@ -17,8 +17,12 @@ export class PaymentService {
     private readonly paymentRepository: PaymentRepository,
   ) {}
 
-  private getFinalPrice(products: Product[], cart: Cart): number {
-    return cart.cartProducts?.reduce((accumulator, cartProduct) => {
+  private generateFinalPrice(products: Product[], cart: Cart): number {
+    if (!cart.cartProducts || cart.cartProducts.length === 0) {
+      return 0;
+    }
+
+    return cart.cartProducts.reduce((accumulator, cartProduct) => {
       const product = products.find(
         (product) => product.id === cartProduct.productId,
       );
@@ -36,7 +40,7 @@ export class PaymentService {
     products: Product[],
     cart: Cart,
   ): Promise<Payment> {
-    const finalPrice = this.getFinalPrice(products, cart);
+    const finalPrice = this.generateFinalPrice(products, cart);
 
     if (createOrderDto.amountPayments) {
       const paymentCreditCard = new PaymentCreditCard(
