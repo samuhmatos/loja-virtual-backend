@@ -9,6 +9,12 @@ import { State } from '../state/entities/state.entity';
 import { User } from '../user/entities/user.entity';
 import { Cart } from '../cart/entities/cart.entity';
 import { CartProduct } from '../cart-product/entities/cart-product.entity';
+import { PaymentStatus } from '../payment-status/entities/payment-status.entity';
+import { Payment } from '../payment/entities/payment.entity';
+import { PaymentPix } from '../payment/entities/payment-pix.entity';
+import { PaymentCreditCard } from '../payment/entities/payment-credit-cart.entity';
+import { Order } from '../order/entities/order.entity';
+import { OrderProduct } from '../order-product/entities/order-product.entity';
 
 import { CreateTableUser1708097611609 } from './migrations/1708097611609-create_table_user';
 import { CreateTableState1708103629835 } from './migrations/1708103629835-create_table_state';
@@ -24,6 +30,10 @@ import { InsertRootInUser1708538550074 } from './migrations/1708538550074-insert
 import { CreateTableCart1709039097609 } from './migrations/1709039097609-create-table-cart';
 import { CreateTableCartProduct1709040218909 } from './migrations/1709040218909-create-table-cart-product';
 import { AlterTableCart1709041408454 } from './migrations/1709041408454-alter-table-cart';
+import { CreateTableStatus1709296000518 } from './migrations/1709295933446-create-table-status';
+import { CreateTablePayment1709295933447 } from './migrations/1709295933447-create-table-payment';
+import { CreateTableOrder1709297504100 } from './migrations/1709297504100-create-table-order';
+import { CreateTableOrderProduct1709297516451 } from './migrations/1709297516451-create-table-order-product';
 
 @Module({
   imports: [
@@ -45,6 +55,12 @@ import { AlterTableCart1709041408454 } from './migrations/1709041408454-alter-ta
             Product,
             Cart,
             CartProduct,
+            PaymentStatus,
+            Payment,
+            PaymentPix,
+            PaymentCreditCard,
+            Order,
+            OrderProduct,
           ],
           migrations: [
             CreateTableUser1708097611609,
@@ -61,6 +77,10 @@ import { AlterTableCart1709041408454 } from './migrations/1709041408454-alter-ta
             CreateTableCart1709039097609,
             CreateTableCartProduct1709040218909,
             AlterTableCart1709041408454,
+            CreateTableStatus1709296000518,
+            CreateTablePayment1709295933447,
+            CreateTableOrder1709297504100,
+            CreateTableOrderProduct1709297516451,
           ],
           migrationsRun: true,
         };
