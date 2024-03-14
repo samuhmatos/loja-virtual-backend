@@ -22,17 +22,21 @@ export class PaymentService {
       return 0;
     }
 
-    return cart.cartProducts.reduce((accumulator, cartProduct) => {
-      const product = products.find(
-        (product) => product.id === cartProduct.productId,
-      );
+    return Number(
+      cart.cartProducts
+        .reduce((accumulator, cartProduct) => {
+          const product = products.find(
+            (product) => product.id === cartProduct.productId,
+          );
 
-      if (product) {
-        return cartProduct.amount * product.price + accumulator;
-      }
+          if (product) {
+            return cartProduct.amount * product.price + accumulator;
+          }
 
-      return 0;
-    }, 0);
+          return 0;
+        }, 0)
+        .toFixed(2),
+    );
   }
 
   create(
