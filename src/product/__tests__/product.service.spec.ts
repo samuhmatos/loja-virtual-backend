@@ -8,6 +8,7 @@ import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { ReturnDeleteMock } from '../../__mocks___/returnDelete.mock';
 import { updateProductMock } from '../__mocks__/updateProduct.mock';
+import { In } from 'typeorm';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -55,13 +56,40 @@ describe('ProductService', () => {
     expect(products).toEqual([productMock]);
   });
 
+  it('should return product list with relations in findAll', async () => {
+    const spy = jest.spyOn(productRepository, 'find');
+    const products = await service.findAll([], true);
+
+    expect(products).toEqual([productMock]);
+    expect(spy.mock.calls[0][0]).toEqual({
+      relations: {
+        category: true,
+      },
+    });
+  });
+
+  it('should return product list with relations and array in findAll', async () => {
+    const spy = jest.spyOn(productRepository, 'find');
+    const products = await service.findAll([2], true);
+
+    expect(products).toEqual([productMock]);
+    expect(spy.mock.calls[0][0]).toEqual({
+      where: {
+        id: In([2]),
+      },
+      relations: {
+        category: true,
+      },
+    });
+  });
+
   it('should return error if product list is empty', async () => {
     jest.spyOn(productRepository, 'find').mockResolvedValue([]);
 
     expect(service.findAll()).rejects.toThrowError();
   });
 
-  it('should return error if product list is empty', async () => {
+  it('should return error iin exception on findAll', async () => {
     jest.spyOn(productRepository, 'find').mockRejectedValue(new Error());
 
     expect(service.findAll()).rejects.toThrowError();

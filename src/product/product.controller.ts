@@ -32,7 +32,7 @@ export class ProductController {
 
   @Get()
   async findAll(): Promise<ReturnProductDto[]> {
-    const products = await this.productService.findAll();
+    const products = await this.productService.findAll([], true);
 
     return products.map((product) => new ReturnProductDto(product));
   }
