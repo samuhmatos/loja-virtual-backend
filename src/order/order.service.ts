@@ -73,7 +73,7 @@ export class OrderService {
     return orders;
   }
 
-  private async createOrderProductUsingCart(
+  async createOrderProductUsingCart(
     cart: Cart,
     orderId: number,
     products: Product[],
@@ -91,7 +91,7 @@ export class OrderService {
     );
   }
 
-  private async createOrder(
+  async createOrder(
     addressId: number,
     paymentId: number,
     userId: number,
