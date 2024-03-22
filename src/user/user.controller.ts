@@ -27,7 +27,7 @@ export class UserController {
   }
 
   @Roles(UserType.Admin)
-  @Get()
+  @Get('/all')
   async getAll(): Promise<ReturnUserDto[]> {
     const users = await this.userService.getAll();
 
@@ -53,6 +53,14 @@ export class UserController {
       updatePasswordDto,
       userId,
     );
+
+    return new ReturnUserDto(user);
+  }
+
+  @Roles(UserType.User, UserType.Admin)
+  @Get()
+  async getInfoUser(@UserId() userId: number): Promise<ReturnUserDto> {
+    const user = await this.userService.getUserByIdUsingRelations(userId);
 
     return new ReturnUserDto(user);
   }

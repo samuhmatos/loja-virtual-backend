@@ -61,4 +61,10 @@ describe('UserController', () => {
 
     expect(user).toEqual(returnUserMock);
   });
+
+  it('should return User in getInfoUser', async () => {
+    const user = await controller.getInfoUser(userMock.id);
+
+    expect(user).toEqual(returnUserMock);
+  });
 });
